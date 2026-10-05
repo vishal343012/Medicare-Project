@@ -1,0 +1,12 @@
+import "dotenv/config";
+import express from "express";
+import cors from "cors";
+import pg from "pg";
+const {Pool}=pg;
+const app=express();
+const pool=new Pool({connectionString:process.env.DATABASE_URL});
+app.use(cors()); app.use(express.json());
+app.get("/api/health",async(_req,res)=>{try{await pool.query("SELECT 1");res.json({status:"ok",database:"connected"})}catch(e){res.status(500).json({status:"error",database:"unavailable"})}});
+app.get("/api/me",(req,res)=>res.json({name:req.headers["x-auth-request-user"]||"POC User",email:req.headers["x-auth-request-email"]||"Authenticated user"}));
+app.get("/api/patients",async(_req,res)=>{try{const r=await pool.query("SELECT id,name,condition,status FROM patients ORDER BY id");res.json(r.rows)}catch(e){res.status(500).json({error:"Unable to retrieve records"})}});
+app.listen(Number(process.env.PORT||5000),"127.0.0.1",()=>console.log("API listening on 127.0.0.1:5000"));

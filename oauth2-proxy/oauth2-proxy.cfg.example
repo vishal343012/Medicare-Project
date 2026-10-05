@@ -1,0 +1,14 @@
+http_address = "127.0.0.1:4180"
+provider = "oidc"
+oidc_issuer_url = "https://login.microsoftonline.com/CHANGE_ME_TENANT_ID/v2.0"
+client_id = "CHANGE_ME_CLIENT_ID"
+client_secret = "CHANGE_ME_CLIENT_SECRET"
+redirect_url = "https://poc.example.com/oauth2/callback"
+cookie_secret = "CHANGE_ME_BASE64_SECRET"
+cookie_secure = true
+cookie_httponly = true
+email_domains = ["*"]
+skip_provider_button = true
+set_xauthrequest = true
+pass_access_token = false
+pass_authorization_header = false
